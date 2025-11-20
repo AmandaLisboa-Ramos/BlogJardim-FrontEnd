@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router-dom";
-import Home from "../screens/Home/Home";
 import Login from "../screens/Login/Login";
 import CreatePost from "../screens/CreatePost/CreatePost";
 import EditPost from "../screens/EditPost/EditPost";
@@ -9,6 +8,7 @@ import MainLayout from "../layout/MainLayout";
 import LoginLayout from "../layout/LoginLayout";
 import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute";
 import NewAccount from "../screens/NewAccount/NewAccount";
+import Home from "../screens/Home/Home";
 
 const AppRouter = ({ isDarkMode, toggleDarkMode }) => {
   return (
