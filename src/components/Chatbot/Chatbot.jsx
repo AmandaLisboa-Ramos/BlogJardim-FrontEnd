@@ -62,9 +62,6 @@ export default function Chatbot({ isDarkMode }) {
     setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
     setIsLoading(true);
 
-    // URL do webhook do n8n - pode ser configurada via variável de ambiente
-    // Para usar variável de ambiente, crie um arquivo .env na raiz do projeto com:
-    // VITE_N8N_WEBHOOK_URL=https://amandalisboa.app.n8n.cloud/webhook-test/4b849bb2-2ed8-474c-bf84-5007a028f7cd
     const N8N_WEBHOOK_URL = import.meta.env.VITE_N8N_WEBHOOK_URL;
 
     if (!N8N_WEBHOOK_URL) {
