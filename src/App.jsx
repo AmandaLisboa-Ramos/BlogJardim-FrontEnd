@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import AppRouter from "./routes/AppRouter";
 import "./styles/normalize.css";
-import "./styles/global.css";
+import "./styles/Global.css";
 
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(
