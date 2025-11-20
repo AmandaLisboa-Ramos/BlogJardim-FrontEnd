@@ -1,14 +1,14 @@
 import { Route, Routes } from "react-router-dom";
-import Login from "../screens/Login/Login";
-import CreatePost from "../screens/CreatePost/CreatePost";
-import EditPost from "../screens/EditPost/EditPost";
-import PostDetails from "../screens/PostDetails/PostDetails";
-import Profile from "../screens/Profile/Profile";
+import Login from "../screens/Login";
+import EditPost from "../screens/EditPost";
+import PostDetails from "../screens/PostDetails";
+import Profile from "../screens/Profile";
 import MainLayout from "../layout/MainLayout";
 import LoginLayout from "../layout/LoginLayout";
-import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute";
-import NewAccount from "../screens/NewAccount/NewAccount";
-import Home from "../screens/Home/Home";
+import ProtectedRoute from "../components/ProtectedRoute";
+import NewAccount from "../screens/NewAccount";
+import Home from "../screens/Home";
+import CreatePost from "../screens/CreatePost";
 
 const AppRouter = ({ isDarkMode, toggleDarkMode }) => {
   return (
