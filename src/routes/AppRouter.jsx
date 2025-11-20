@@ -1,10 +1,10 @@
 import { Route, Routes } from "react-router-dom";
-import Home from "../screens/Home/home";
-import Login from "../screens/Login/login";
-import CreatePost from "../screens/CreatePost/createPost";
-import EditPost from "../screens/EditPost/editPost";
-import PostDetails from "../screens/PostDetails/postDetails";
-import Profile from "../screens/Profile/profile";
+import Home from "../screens/Home/Home";
+import Login from "../screens/Login/Login";
+import CreatePost from "../screens/CreatePost/CreatePost";
+import EditPost from "../screens/EditPost/EditPost";
+import PostDetails from "../screens/PostDetails/PostDetails";
+import Profile from "../screens/Profile/Profile";
 import MainLayout from "../layout/MainLayout";
 import LoginLayout from "../layout/LoginLayout";
 import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute";
