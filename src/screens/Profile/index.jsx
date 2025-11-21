@@ -44,10 +44,10 @@ export default function Profile() {
       .get(`${API_USERS}/${user.id}`)
       .then((res) => {
         setForm({
-          name: res.data.name,
-          email: res.data.email,
-          birthDate: res.data.birthDate,
-          phone: res.data.phone,
+          name: res.data.name || "",
+          email: res.data.email || "",
+          birthDate: res.data.birthDate || "",
+          phone: res.data.phone || "",
         });
       })
       .finally(() => setLoading(false));
@@ -131,7 +131,7 @@ export default function Profile() {
             <input
               type="text"
               name="name"
-              value={form.name}
+              value={form.name || ""}
               onChange={handleChange}
             />
           </div>
@@ -141,7 +141,7 @@ export default function Profile() {
             <input
               type="email"
               name="email"
-              value={form.email}
+              value={form.email || ""}
               onChange={handleChange}
             />
           </div>
@@ -152,7 +152,7 @@ export default function Profile() {
               <input
                 type="date"
                 name="birthDate"
-                value={form.birthDate}
+                value={form.birthDate || ""}
                 onChange={handleChange}
               />
             </div>
@@ -162,7 +162,7 @@ export default function Profile() {
               <input
                 type="text"
                 name="phone"
-                value={form.phone}
+                value={form.phone || ""}
                 onChange={handleChange}
               />
             </div>

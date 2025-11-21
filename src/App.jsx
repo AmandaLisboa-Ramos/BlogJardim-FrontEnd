@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import AppRouter from "./routes/AppRouter";
 import "./styles/normalize.css";
 import "./styles/Global.css";
@@ -24,7 +26,21 @@ const App = () => {
   };
 
   return (
-    <AppRouter isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
+    <>
+      <AppRouter isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme={isDarkMode ? "dark" : "light"}
+      />
+    </>
   );
 };
 

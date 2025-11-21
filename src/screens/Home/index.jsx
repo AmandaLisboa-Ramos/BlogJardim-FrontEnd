@@ -71,9 +71,9 @@ const Home = () => {
 
     const filtered = posts.filter(post => {
       if (filterType === 'titulo') {
-        return post.titulo.toLowerCase().includes(searchTerm.toLowerCase());
+        return post.titulo && post.titulo.toLowerCase().includes(searchTerm.toLowerCase());
       } else {
-        return post.autor.toLowerCase().includes(searchTerm.toLowerCase());
+        return post.autor && post.autor.toLowerCase().includes(searchTerm.toLowerCase());
       }
     });
 
@@ -175,19 +175,19 @@ const Home = () => {
               <div className={styles.postMeta}>
                 <div className={styles.authorInfo}>
                   <div className={styles.authorAvatar}>
-                    {post.autor.charAt(0).toUpperCase()}
+                    {post.autor && post.autor.charAt ? post.autor.charAt(0).toUpperCase() : "?"}
                   </div>
                   <div>
-                    <p className={styles.authorName}>{post.autor}</p>
+                    <p className={styles.authorName}>{post.autor || "Autor Desconhecido"}</p>
                     <p className={styles.postDate}>
-                      {new Date(post.dataPublicacao).toLocaleDateString('pt-BR')}
+                      {post.dataPublicacao ? new Date(post.dataPublicacao).toLocaleDateString('pt-BR') : "Data não disponível"}
                     </p>
                   </div>
                 </div>
               </div>
 
               <p className={styles.postExcerpt}>
-                {post.conteudo.substring(0, 150)}...
+                {post.conteudo ? (post.conteudo.length > 150 ? post.conteudo.substring(0, 150) + "..." : post.conteudo) : "Sem conteúdo"}
               </p>
 
               <Link 

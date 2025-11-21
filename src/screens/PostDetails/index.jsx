@@ -11,8 +11,25 @@ export default function PostDetails() {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [isLiked, setIsLiked] = useState(false);
-  const [userName] = useState("Usuário Anônimo");
+  const [userName, setUserName] = useState("Usuário Anônimo");
+  const [userEmail, setUserEmail] = useState("");
   const [isDark, setIsDark] = useState(false);
+
+  // Carregar informações do usuário logado
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      // Pega o nome do usuário: se tiver nome válido usa ele, senão usa parte do email antes do @
+      let name = "Usuário Anônimo";
+      if (user.name && user.name.trim() && user.name.trim() !== "") {
+        name = user.name.trim();
+      } else if (user.email) {
+        name = user.email.split("@")[0];
+      }
+      setUserName(name);
+      setUserEmail(user.email || "");
+    }
+  }, []);
 
   // Observar mudanças no dark mode
   useEffect(() => {
@@ -75,10 +92,16 @@ export default function PostDetails() {
   function handleNewComment(e) {
     e.preventDefault();
 
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) {
+      alert("Você precisa estar logado para comentar!");
+      return;
+    }
+
     const commentData = {
       autor: userName,
       conteudo: newComment,
-      email: "email@usuario.com",
+      email: userEmail || user.email || "",
       data_comentario: new Date(),
     };
 

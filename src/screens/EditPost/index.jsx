@@ -1,16 +1,40 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import axios from "axios";
-import { useAuth } from "../../context/AuthContext";
-import styles from "./editPost.module.css"; 
+import { toast } from "react-toastify";
+import styles from "./editPost.module.css";
+
+const API_BASE = "https://blogjardim.onrender.com";
+
+const schema = yup.object({
+  titulo: yup
+    .string()
+    .required("O título é obrigatório.")
+    .min(3, "O título deve ter pelo menos 3 caracteres."),
+  conteudo: yup
+    .string()
+    .required("O conteúdo é obrigatório.")
+    .min(10, "O conteúdo deve ter pelo menos 10 caracteres."),
+});
 
 export default function EditPost() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { user } =  useAuth();
-  const [post, setPost] = useState({ title: "", body: "" });
   const [loading, setLoading] = useState(true);
   const [isDark, setIsDark] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    setValue,
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: { titulo: "", conteudo: "" },
+  });
 
   useEffect(() => {
     setIsDark(document.documentElement.classList.contains("dark"));
@@ -23,23 +47,27 @@ export default function EditPost() {
     return () => observer.disconnect();
   }, []);
 
-
   useEffect(() => {
-    axios
-      .get(`https://jsonplaceholder.typicode.com/posts/${id}`)
-      .then((res) => setPost(res.data))
-      .catch((err) => console.error(err))
-      .finally(() => setLoading(false));
-  }, [id]);
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) {
+      toast.error("Você precisa estar logado para editar posts!");
+      navigate("/login");
+      return;
+    }
 
-  if (!user) {
-    return (
-      <div className={`${styles.editpostMessage} ${isDark ? styles.dark : ''}`}>
-        <p>Você precisa estar logado para editar posts.</p>
-        <button onClick={() => navigate("/login")}>Ir para Login</button>
-      </div>
-    );
-  }
+    axios
+      .get(`${API_BASE}/posts/${id}`)
+      .then((res) => {
+        setValue("titulo", res.data.titulo || "");
+        setValue("conteudo", res.data.conteudo || "");
+      })
+      .catch((err) => {
+        console.error("Erro ao carregar post:", err);
+        toast.error("Erro ao carregar o post.");
+        navigate("/profile");
+      })
+      .finally(() => setLoading(false));
+  }, [id, navigate, setValue]);
 
   if (loading) {
     return (
@@ -49,45 +77,71 @@ export default function EditPost() {
     );
   }
 
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setPost({ ...post, [name]: value });
-  }
+  const onSubmit = async (data) => {
+    const user = JSON.parse(localStorage.getItem("user"));
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    axios
-      .put(`https://jsonplaceholder.typicode.com/posts/${id}`, post)
-      .then(() => {
-        alert("Post atualizado com sucesso!");
-        navigate("/profile");
-      })
-      .catch(() => alert("Erro ao atualizar post"));
-  }
+    if (!user) {
+      toast.error("Você precisa estar logado para editar posts!");
+      navigate("/login");
+      return;
+    }
+
+    // Pega o nome do usuário: se tiver nome válido usa ele, senão usa parte do email antes do @
+    let userName = "Usuário Anônimo";
+    if (user.name && user.name.trim() && user.name.trim() !== "") {
+      userName = user.name.trim();
+    } else if (user.email) {
+      userName = user.email.split("@")[0];
+    }
+
+    try {
+      await axios.put(`${API_BASE}/posts/${id}`, {
+        titulo: data.titulo,
+        conteudo: data.conteudo,
+        autor: userName,
+        email: user.email,
+      });
+
+      toast.success("Post atualizado com sucesso!");
+      navigate("/profile");
+    } catch (err) {
+      console.error("Erro ao atualizar post:", err);
+      toast.error("Erro ao atualizar o post.");
+    }
+  };
 
   return (
     <div className={`${styles.editpostContainer} ${isDark ? styles.dark : ''}`}>
       <div className={styles.editpostCard}>
-        <h1>Editar Post</h1>
-        <form onSubmit={handleSubmit}>
-          <label>Título</label>
-          <input
-            type="text"
-            name="title"
-            value={post.title}
-            onChange={handleChange}
-            required
-          />
+        <h1 className={styles.editpostTitle}>Editar Post</h1>
+        <form className={styles.editpostForm} onSubmit={handleSubmit(onSubmit)}>
+          <div className={styles.formGroup}>
+            <label className={styles.formLabel}>Título *</label>
+            <input
+              type="text"
+              placeholder="Digite o título"
+              {...register("titulo")}
+              className={styles.formInput}
+            />
+            {errors.titulo && (
+              <span className={styles.errorMessage}>{errors.titulo.message}</span>
+            )}
+          </div>
 
-          <label>Conteúdo</label>
-          <textarea
-            name="body"
-            value={post.body}
-            onChange={handleChange}
-            required
-          />
+          <div className={styles.formGroup}>
+            <label className={styles.formLabel}>Conteúdo *</label>
+            <textarea
+              placeholder="Digite o conteúdo do post"
+              rows="6"
+              {...register("conteudo")}
+              className={styles.formTextarea}
+            ></textarea>
+            {errors.conteudo && (
+              <span className={styles.errorMessage}>{errors.conteudo.message}</span>
+            )}
+          </div>
 
-          <div className={styles["editpost-buttons"]}>
+          <div className={styles.editpostButtons}>
             <button
               type="button"
               className={styles.cancel}
@@ -95,8 +149,12 @@ export default function EditPost() {
             >
               Cancelar
             </button>
-            <button type="submit" className={styles.save}>
-              Salvar Alterações
+            <button
+              type="submit"
+              className={styles.save}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Salvando..." : "Salvar Alterações"}
             </button>
           </div>
         </form>

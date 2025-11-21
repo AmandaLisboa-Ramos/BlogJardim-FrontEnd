@@ -52,8 +52,13 @@ export default function CreatePost() {
       return;
     }
 
-  
-    const userName = user.name?.trim() || user.email?.split("@")[0] || "Usuário Anônimo";
+    // Pega o nome do usuário: se tiver nome válido usa ele, senão usa parte do email antes do @
+    let userName = "Usuário Anônimo";
+    if (user.name && user.name.trim() && user.name.trim() !== "") {
+      userName = user.name.trim();
+    } else if (user.email) {
+      userName = user.email.split("@")[0];
+    }
 
     try {
       await axios.post("https://blogjardim.onrender.com/posts", {
