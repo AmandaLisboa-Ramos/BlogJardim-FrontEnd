@@ -10,6 +10,19 @@ export default function EditPost() {
   const { user } =  useAuth();
   const [post, setPost] = useState({ title: "", body: "" });
   const [loading, setLoading] = useState(true);
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    setIsDark(document.documentElement.classList.contains("dark"));
+
+    const observer = new MutationObserver(() => {
+      setIsDark(document.documentElement.classList.contains("dark"));
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+
+    return () => observer.disconnect();
+  }, []);
+
 
   useEffect(() => {
     axios
@@ -21,14 +34,20 @@ export default function EditPost() {
 
   if (!user) {
     return (
-      <div className="editpost-message">
+      <div className={`${styles.editpostMessage} ${isDark ? styles.dark : ''}`}>
         <p>Você precisa estar logado para editar posts.</p>
         <button onClick={() => navigate("/login")}>Ir para Login</button>
       </div>
     );
   }
 
-  if (loading) return <p className="editpost-loading">Carregando post...</p>;
+  if (loading) {
+    return (
+      <div className={`${styles.editpostContainer} ${isDark ? styles.dark : ''}`}>
+        <p className={styles.editpostLoading}>Carregando post...</p>
+      </div>
+    );
+  }
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -47,8 +66,8 @@ export default function EditPost() {
   }
 
   return (
-    <div className={styles["editpost-container"]}>
-      <div className={styles["editpost-card"]}>
+    <div className={`${styles.editpostContainer} ${isDark ? styles.dark : ''}`}>
+      <div className={styles.editpostCard}>
         <h1>Editar Post</h1>
         <form onSubmit={handleSubmit}>
           <label>Título</label>
@@ -71,12 +90,12 @@ export default function EditPost() {
           <div className={styles["editpost-buttons"]}>
             <button
               type="button"
-              className="cancel"
+              className={styles.cancel}
               onClick={() => navigate("/profile")}
             >
               Cancelar
             </button>
-            <button type="submit" className="save">
+            <button type="submit" className={styles.save}>
               Salvar Alterações
             </button>
           </div>
