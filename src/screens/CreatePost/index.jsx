@@ -31,7 +31,6 @@ export default function CreatePost() {
   });
 
   const onSubmit = async (data) => {
-    // cons para recupera o usuário logado
     const user = JSON.parse(localStorage.getItem("user"));
 
     if (!user) {
@@ -40,11 +39,14 @@ export default function CreatePost() {
       return;
     }
 
+  
+    const userName = user.name?.trim() || user.email?.split("@")[0] || "Usuário Anônimo";
+
     try {
       await axios.post("https://blogjardim.onrender.com/posts", {
         titulo: data.titulo,
         conteudo: data.conteudo,
-        autor: user.nome || "Usuário Anônimo",
+        autor: userName,
         email: user.email,
         dataPublicacao: new Date().toISOString().split("T")[0],
         quantidadeAmeis: 0

@@ -1,17 +1,27 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { useAuth } from "../../context/AuthContext";
 import styles from "./post.module.css";
 
 export default function PostDetails() {
   const { id } = useParams();
+  const { user } = useAuth();
   const API_BASE = "https://blogjardim.onrender.com";
 
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [isLiked, setIsLiked] = useState(false);
-  const [userName] = useState("Usuário Anônimo");
+  
+  // Obtém o nome do usuário logado, com fallback para anônimo
+  const userName = useMemo(() => {
+    const currentUser = user || JSON.parse(localStorage.getItem("user") || "null");
+    if (!currentUser) return "Usuário Anônimo";
+    
+    const name = currentUser.name?.trim();
+    return name || currentUser.email?.split("@")[0] || "Usuário Anônimo";
+  }, [user]);
 
   useEffect(() => {
     axios
@@ -26,7 +36,7 @@ export default function PostDetails() {
 
     const likedPosts = JSON.parse(localStorage.getItem("likedPosts")) || [];
     setIsLiked(likedPosts.includes(id));
-  }, [id]);
+  }, [id, user]);
 
   if (!post) return <p>Carregando...</p>;
 
@@ -57,10 +67,12 @@ export default function PostDetails() {
   function handleNewComment(e) {
     e.preventDefault();
 
+    const currentUser = user || JSON.parse(localStorage.getItem("user"));
+
     const commentData = {
       autor: userName,
       conteudo: newComment,
-      email: "email@usuario.com",
+      email: currentUser?.email || "email@usuario.com",
       data_comentario: new Date(),
     };
 
