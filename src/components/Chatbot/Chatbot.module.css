@@ -322,10 +322,12 @@
 @media (max-width: 768px) {
   .chatbotWindow {
     width: calc(100vw - 32px);
-    height: 500px;
+    max-height: calc(100vh - 100px);
+    height: calc(100vh - 100px);
     left: 16px;
     right: 16px;
-    bottom: 20px;
+    bottom: 80px;
+    top: auto;
   }
 
   .chatbotToggle {
@@ -340,14 +342,17 @@
 @media (max-width: 480px) {
   .chatbotWindow {
     width: calc(100vw - 24px);
-    height: 450px;
+    max-height: calc(100vh - 90px);
+    height: calc(100vh - 90px);
     left: 12px;
     right: 12px;
-    bottom: 16px;
+    bottom: 70px;
+    top: auto;
   }
 
   .chatbotHeader {
     padding: 12px;
+    flex-shrink: 0;
   }
 
   .chatbotTitle {
@@ -356,6 +361,8 @@
 
   .messagesContainer {
     padding: 12px;
+    flex: 1;
+    min-height: 0;
   }
 
   .messageContent {
@@ -365,6 +372,7 @@
 
   .chatbotInputForm {
     padding: 10px;
+    flex-shrink: 0;
   }
 
   .chatbotInput {
