@@ -153,16 +153,49 @@
 
 @media (max-width: 768px) {
   .createPostWrapper {
-    padding: 2rem 0 0 2rem;
+    padding: 1.5rem 1rem;
   }
   .createPostCard {
     padding: 1.4rem;
   }
+
+  .createPostTitle {
+    font-size: 1.5rem;
+  }
 }
 
 @media (max-width: 480px) {
+  .createPostWrapper {
+    padding: 1rem 0.75rem;
+  }
+
+  .createPostCard {
+    padding: 1rem;
+    border-radius: 12px;
+  }
+
+  .createPostTitle {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+
+  .createPostForm {
+    gap: 1rem;
+  }
+
+  .formLabel {
+    font-size: 0.9rem;
+  }
+
+  .formInput,
+  .formTextarea {
+    padding: 0.75rem;
+    font-size: 0.95rem;
+  }
+
   .createPostButton {
     width: 100%;
     text-align: center;
+    padding: 0.85rem;
   }
 }

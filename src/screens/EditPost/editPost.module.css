@@ -192,22 +192,56 @@
 
 @media (max-width: 768px) {
   .editpostContainer {
-    padding: 2rem 0 0 2rem;
+    padding: 1.5rem 1rem;
   }
   
   .editpostCard {
     padding: 1.4rem;
   }
+
+  .editpostTitle {
+    font-size: 1.5rem;
+  }
 }
 
 @media (max-width: 480px) {
+  .editpostContainer {
+    padding: 1rem 0.75rem;
+  }
+
+  .editpostCard {
+    padding: 1rem;
+    border-radius: 12px;
+  }
+
+  .editpostTitle {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+
+  .editpostForm {
+    gap: 1rem;
+  }
+
+  .formLabel {
+    font-size: 0.9rem;
+  }
+
+  .formInput,
+  .formTextarea {
+    padding: 0.75rem;
+    font-size: 0.95rem;
+  }
+
   .editpostButtons {
     flex-direction: column;
     align-items: stretch;
+    gap: 8px;
   }
 
   .editpostButtons button {
     width: 100%;
     text-align: center;
+    padding: 0.85rem;
   }
 }

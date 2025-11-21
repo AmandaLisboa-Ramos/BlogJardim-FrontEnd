@@ -33,4 +33,22 @@
   vertical-align: middle;
 }
 
+@media (max-width: 480px) {
+  .inputEmail {
+    margin-bottom: 14px;
+  }
+
+  .inputEmail label {
+    font-size: 12px;
+  }
+
+  .inputEmail input {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  .inputEmail input::placeholder {
+    font-size: 13px;
+  }
+}
 

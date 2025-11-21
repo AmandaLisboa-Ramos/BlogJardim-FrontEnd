@@ -430,11 +430,79 @@
 }
 
 @media (max-width: 480px) {
+  .container {
+    padding: 16px 12px;
+  }
+
+  .content {
+    gap: 20px;
+  }
+
+  .card,
+  .postsSection {
+    padding: 16px;
+  }
+
+  .card h2,
+  .postsTitle {
+    font-size: 18px;
+  }
+
+  .formGroup {
+    gap: 4px;
+  }
+
+  .card label {
+    font-size: 13px;
+  }
+
+  .card input {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .row {
+    gap: 16px;
+  }
+
+  .buttons {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .save,
+  .cancel {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .postItem {
+    padding: 12px;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .postContent {
+    width: 100%;
+  }
+
   .postTitle {
     font-size: 15px;
   }
 
   .postBody {
     font-size: 13px;
+  }
+
+  .postActions {
+    flex-direction: row;
+    width: 100%;
+  }
+
+  .editBtn,
+  .deleteBtn {
+    flex: 1;
+    padding: 8px 12px;
+    font-size: 12px;
   }
 }

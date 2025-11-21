@@ -54,9 +54,36 @@
   .footer {
     text-align: center;
     justify-content: center;
+    padding: 10px 20px;
   }
   .social {
     text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    flex-direction: column;
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .info p {
+    font-size: 16px;
+    margin: 0;
+  }
+
+  .social {
+    text-align: center;
+  }
+
+  .social span {
+    font-size: 14px;
+  }
+
+  .icons {
+    justify-content: center;
+    gap: 16px;
   }
 }
 .dark {

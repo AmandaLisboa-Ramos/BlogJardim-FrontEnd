@@ -8,7 +8,11 @@ const LoginLayout = ({ isDarkMode, toggleDarkMode }) => {
     <>
       <Header isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
 
-      <main style={{ background: "var(--background-main)", color: "var(--text-primary)", minHeight: "calc(100vh - 160px)" }}>
+      <main style={{ 
+        background: "var(--background-main)", 
+        color: "var(--text-primary)", 
+        minHeight: "calc(100vh - 160px)"
+      }}>
         <Outlet />
       </main>
 

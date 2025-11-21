@@ -336,6 +336,10 @@
   }
   
   @media (max-width: 480px) {
+    .page {
+      padding: 12px;
+    }
+
     .postTitleRepeated {
       font-size: 1.4rem;
     }
@@ -352,5 +356,18 @@
   
     .container {
       padding: 18px 16px;
+    }
+
+    .postBlockRepeated {
+      padding: 12px;
+      font-size: 0.95rem;
+    }
+
+    .commentsSection {
+      padding: 18px;
+    }
+
+    .commentItem {
+      padding: 12px;
     }
   }

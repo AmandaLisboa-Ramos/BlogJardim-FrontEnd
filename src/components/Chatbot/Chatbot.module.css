@@ -325,6 +325,55 @@
     height: 500px;
     left: 16px;
     right: 16px;
+    bottom: 20px;
+  }
+
+  .chatbotToggle {
+    font-size: 13px;
+  }
+
+  .chatbotToggleText {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .chatbotWindow {
+    width: calc(100vw - 24px);
+    height: 450px;
+    left: 12px;
+    right: 12px;
+    bottom: 16px;
+  }
+
+  .chatbotHeader {
+    padding: 12px;
+  }
+
+  .chatbotTitle {
+    font-size: 14px;
+  }
+
+  .messagesContainer {
+    padding: 12px;
+  }
+
+  .messageContent {
+    font-size: 13px;
+    padding: 8px 12px;
+  }
+
+  .chatbotInputForm {
+    padding: 10px;
+  }
+
+  .chatbotInput {
+    font-size: 13px;
+    padding: 8px 10px;
+  }
+
+  .sendButton {
+    padding: 8px 12px;
   }
 }
 

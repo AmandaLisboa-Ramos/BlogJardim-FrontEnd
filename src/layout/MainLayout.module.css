@@ -7,14 +7,44 @@
 .contentArea {
   display: flex;
   flex: 1;
+  position: relative;
+}
+
+.overlay {
+  display: none;
 }
 
 .mainContent {
   flex: 1;
   padding: 24px;
+  transition: margin-left 0.3s ease;
 }
 
 .dark {
   background-color: #222;
   color: #f8f6f3;
+}
+
+/* Responsividade para mobile */
+@media (max-width: 768px) {
+  .mainContent {
+    padding: 16px;
+  }
+
+  .overlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+  }
+}
+
+@media (max-width: 480px) {
+  .mainContent {
+    padding: 12px;
+  }
 }
